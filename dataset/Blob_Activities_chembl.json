@@ -1,0 +1,18 @@
+{
+	"name": "Blob_Activities_chembl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorageAccount",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "chembl"
+			}
+		},
+		"schema": {}
+	}
+}
