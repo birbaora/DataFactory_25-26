@@ -1,0 +1,9 @@
+{
+	"name": "simarrobdanacho",
+	"location": "spaincentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "955d69c0-04d5-4bc7-adb5-3407b17dd5b5",
+		"tenantId": "73dd1114-ef7d-40c7-8669-569d32e7e29b"
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"name": "RESTAssayChembl",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Accept": {
+				"type": "string",
+				"defaultValue": "application/json"
+			}
+		},
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://www.ebi.ac.uk/chembl/api/data/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
