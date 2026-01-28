@@ -1,0 +1,19 @@
+{
+	"name": "Blob_chembl_assay_ids",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStorageAccount",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "assay_chembl_ids.json",
+				"container": "chembl"
+			}
+		},
+		"schema": {}
+	}
+}
