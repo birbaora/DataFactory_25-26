@@ -68,6 +68,201 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "activities.json",
+						"container": "chembl"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"activities": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"action_type": {
+										"type": "null"
+									},
+									"activity_comment": {
+										"type": "null"
+									},
+									"activity_id": {
+										"type": "integer"
+									},
+									"activity_properties": {
+										"type": "array"
+									},
+									"assay_chembl_id": {
+										"type": "string"
+									},
+									"assay_description": {
+										"type": "string"
+									},
+									"assay_type": {
+										"type": "string"
+									},
+									"assay_variant_accession": {
+										"type": "null"
+									},
+									"assay_variant_mutation": {
+										"type": "null"
+									},
+									"bao_endpoint": {
+										"type": "string"
+									},
+									"bao_format": {
+										"type": "string"
+									},
+									"bao_label": {
+										"type": "string"
+									},
+									"canonical_smiles": {
+										"type": "string"
+									},
+									"data_validity_comment": {
+										"type": "null"
+									},
+									"data_validity_description": {
+										"type": "null"
+									},
+									"document_chembl_id": {
+										"type": "string"
+									},
+									"document_journal": {
+										"type": "string"
+									},
+									"document_year": {
+										"type": "integer"
+									},
+									"ligand_efficiency": {
+										"type": "null"
+									},
+									"molecule_chembl_id": {
+										"type": "string"
+									},
+									"molecule_pref_name": {
+										"type": "null"
+									},
+									"parent_molecule_chembl_id": {
+										"type": "string"
+									},
+									"pchembl_value": {
+										"type": "null"
+									},
+									"potential_duplicate": {
+										"type": "integer"
+									},
+									"qudt_units": {
+										"type": "string"
+									},
+									"record_id": {
+										"type": "integer"
+									},
+									"relation": {
+										"type": "string"
+									},
+									"src_id": {
+										"type": "integer"
+									},
+									"standard_flag": {
+										"type": "integer"
+									},
+									"standard_relation": {
+										"type": "string"
+									},
+									"standard_text_value": {
+										"type": "null"
+									},
+									"standard_type": {
+										"type": "string"
+									},
+									"standard_units": {
+										"type": "string"
+									},
+									"standard_upper_value": {
+										"type": "null"
+									},
+									"standard_value": {
+										"type": "string"
+									},
+									"target_chembl_id": {
+										"type": "string"
+									},
+									"target_organism": {
+										"type": "string"
+									},
+									"target_pref_name": {
+										"type": "string"
+									},
+									"target_tax_id": {
+										"type": "string"
+									},
+									"text_value": {
+										"type": "null"
+									},
+									"toid": {
+										"type": "null"
+									},
+									"type": {
+										"type": "string"
+									},
+									"units": {
+										"type": "string"
+									},
+									"uo_units": {
+										"type": "string"
+									},
+									"upper_value": {
+										"type": "null"
+									},
+									"value": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"page_meta": {
+							"type": "object",
+							"properties": {
+								"limit": {
+									"type": "integer"
+								},
+								"next": {
+									"type": "string"
+								},
+								"offset": {
+									"type": "integer"
+								},
+								"previous": {
+									"type": "null"
+								},
+								"total_count": {
+									"type": "integer"
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorageAccount')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob_chembl_assay_ids')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorageAccount",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "assay_chembl_ids.json",
 						"container": "chembl"
 					}
 				},
@@ -163,6 +358,73 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/REST_Activities_Chembl')]",
 				"[concat(variables('factoryId'), '/datasets/Blob_Activities_chembl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DE_Activities_a_assay_chembl_id')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Blob_Activities_chembl",
+								"type": "DatasetReference"
+							},
+							"name": "listarFicheroJson"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Blob_chembl_assay_ids",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flatten1"
+						},
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          activities as (action_type as string, activity_comment as string, activity_id as integer, activity_properties as string[], assay_chembl_id as string, assay_description as string, assay_type as string, assay_variant_accession as string, assay_variant_mutation as string, bao_endpoint as string, bao_format as string, bao_label as string, canonical_smiles as string, data_validity_comment as string, data_validity_description as string, document_chembl_id as string, document_journal as string, document_year as integer, ligand_efficiency as string, molecule_chembl_id as string, molecule_pref_name as string, parent_molecule_chembl_id as string, pchembl_value as string, potential_duplicate as integer, qudt_units as string, record_id as integer, relation as string, src_id as integer, standard_flag as integer, standard_relation as string, standard_text_value as string, standard_type as string, standard_units as string, standard_upper_value as string, standard_value as string, target_chembl_id as string, target_organism as string, target_pref_name as string, target_tax_id as string, text_value as string, toid as string, type as string, units as string, uo_units as string, upper_value as string, value as string)[],",
+						"          page_meta as (limit as integer, next as string, offset as integer, previous as string, total_count as integer)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'documentPerLine') ~> listarFicheroJson",
+						"listarFicheroJson foldDown(unroll(activities, activities),",
+						"     mapColumn(",
+						"          activity_id = activities.activity_id,",
+						"          assay_chembl_id = activities.assay_chembl_id",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flatten1",
+						"flatten1 select(mapColumn(",
+						"          activity_id,",
+						"          assay_chembl_id",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Blob_Activities_chembl')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_chembl_assay_ids')]"
 			]
 		}
 	]
