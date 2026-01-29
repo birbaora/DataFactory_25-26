@@ -1,0 +1,32 @@
+{
+	"name": "Pipe_Aplanamiento_activities_chembl_ids",
+	"properties": {
+		"activities": [
+			{
+				"name": "dataflow_activities_a_assay_chembl_id",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DE_Activities_a_assay_chembl_id",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}

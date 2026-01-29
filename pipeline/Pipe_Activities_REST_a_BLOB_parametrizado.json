@@ -1,0 +1,57 @@
+{
+	"name": "Pipe_Activities_REST_a_BLOB_parametrizado",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copia_Activities_REST_a_BLOB",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "REST_Activities_Chembl_parametrizado",
+						"type": "DatasetReference",
+						"parameters": {
+							"activity_id": 31870
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Blob_Activities_chembl",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

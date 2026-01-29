@@ -1,0 +1,26 @@
+{
+	"name": "REST_Activities_Chembl_parametrizado",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RESTAssayChembl",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Accept": "application/json"
+			}
+		},
+		"parameters": {
+			"activity_id": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "activity/?activity_id=@{dataset().activity_id}\n",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
