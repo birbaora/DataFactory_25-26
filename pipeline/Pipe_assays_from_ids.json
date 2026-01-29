@@ -29,7 +29,8 @@
 					"dataset": {
 						"referenceName": "Blob_chembl_assay_ids",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{

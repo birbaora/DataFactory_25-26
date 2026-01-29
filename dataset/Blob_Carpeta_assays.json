@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "@{item().assay_chembl_id}_data.json",
 				"folderPath": "Assays",
 				"container": "chembl"
 			}
