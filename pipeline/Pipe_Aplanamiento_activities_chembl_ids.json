@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DE_Activities_a_assay_chembl_id",
+						"referenceName": "De_Activities_a_assay_chembl_id",
 						"type": "DataFlowReference"
 					},
 					"compute": {

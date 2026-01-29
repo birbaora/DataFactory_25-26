@@ -1,5 +1,5 @@
 {
-	"name": "DE_Activities_a_assay_chembl_id",
+	"name": "De_Activities_a_assay_chembl_id",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -52,8 +52,10 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['salida_chembl_assays_ids'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
