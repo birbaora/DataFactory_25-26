@@ -249,6 +249,228 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Blob_Activities_chembl_parametrizado')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorageAccount",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "activity_parametrizada.json",
+						"container": "chembl"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"activities": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"action_type": {
+										"type": "null"
+									},
+									"activity_comment": {
+										"type": "null"
+									},
+									"activity_id": {
+										"type": "integer"
+									},
+									"activity_properties": {
+										"type": "array"
+									},
+									"assay_chembl_id": {
+										"type": "string"
+									},
+									"assay_description": {
+										"type": "string"
+									},
+									"assay_type": {
+										"type": "string"
+									},
+									"assay_variant_accession": {
+										"type": "null"
+									},
+									"assay_variant_mutation": {
+										"type": "null"
+									},
+									"bao_endpoint": {
+										"type": "string"
+									},
+									"bao_format": {
+										"type": "string"
+									},
+									"bao_label": {
+										"type": "string"
+									},
+									"canonical_smiles": {
+										"type": "string"
+									},
+									"data_validity_comment": {
+										"type": "null"
+									},
+									"data_validity_description": {
+										"type": "null"
+									},
+									"document_chembl_id": {
+										"type": "string"
+									},
+									"document_journal": {
+										"type": "string"
+									},
+									"document_year": {
+										"type": "integer"
+									},
+									"ligand_efficiency": {
+										"type": "null"
+									},
+									"molecule_chembl_id": {
+										"type": "string"
+									},
+									"molecule_pref_name": {
+										"type": "null"
+									},
+									"parent_molecule_chembl_id": {
+										"type": "string"
+									},
+									"pchembl_value": {
+										"type": "null"
+									},
+									"potential_duplicate": {
+										"type": "integer"
+									},
+									"qudt_units": {
+										"type": "string"
+									},
+									"record_id": {
+										"type": "integer"
+									},
+									"relation": {
+										"type": "string"
+									},
+									"src_id": {
+										"type": "integer"
+									},
+									"standard_flag": {
+										"type": "integer"
+									},
+									"standard_relation": {
+										"type": "string"
+									},
+									"standard_text_value": {
+										"type": "null"
+									},
+									"standard_type": {
+										"type": "string"
+									},
+									"standard_units": {
+										"type": "string"
+									},
+									"standard_upper_value": {
+										"type": "null"
+									},
+									"standard_value": {
+										"type": "string"
+									},
+									"target_chembl_id": {
+										"type": "string"
+									},
+									"target_organism": {
+										"type": "string"
+									},
+									"target_pref_name": {
+										"type": "string"
+									},
+									"target_tax_id": {
+										"type": "string"
+									},
+									"text_value": {
+										"type": "null"
+									},
+									"toid": {
+										"type": "null"
+									},
+									"type": {
+										"type": "string"
+									},
+									"units": {
+										"type": "string"
+									},
+									"uo_units": {
+										"type": "string"
+									},
+									"upper_value": {
+										"type": "null"
+									},
+									"value": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"page_meta": {
+							"type": "object",
+							"properties": {
+								"limit": {
+									"type": "integer"
+								},
+								"next": {
+									"type": "string"
+								},
+								"offset": {
+									"type": "integer"
+								},
+								"previous": {
+									"type": "null"
+								},
+								"total_count": {
+									"type": "integer"
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorageAccount')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob_Carpeta_assays')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobStorageAccount",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@{item().assay_chembl_id}_data.json",
+							"type": "Expression"
+						},
+						"folderPath": "Assays",
+						"container": "chembl"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BlobStorageAccount')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Blob_chembl_assay_ids')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -288,6 +510,68 @@
 				"type": "RestResource",
 				"typeProperties": {
 					"relativeUrl": "activity/"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RESTAssayChembl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REST_Activities_Chembl_parametrizado')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RESTAssayChembl",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Accept": "application/json"
+					}
+				},
+				"parameters": {
+					"activity_id": {
+						"type": "int"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "activity/?activity_id=@{dataset().activity_id}\n",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RESTAssayChembl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REST_Assay_Chembl_parametrizado')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RESTAssayChembl",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"Accept": "application/json"
+					}
+				},
+				"parameters": {
+					"assay_chembl_id": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "assay/?assay_chembl_id=@{dataset().assay_chembl_id}\n",
+						"type": "Expression"
+					}
 				},
 				"schema": []
 			},
@@ -361,7 +645,195 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DE_Activities_a_assay_chembl_id')]",
+			"name": "[concat(parameters('factoryName'), '/Pipe_Activities_REST_a_BLOB_parametrizado')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copia_Activities_REST_a_BLOB",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "REST_Activities_Chembl_parametrizado",
+								"type": "DatasetReference",
+								"parameters": {
+									"activity_id": 31870
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Blob_Activities_chembl",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/REST_Activities_Chembl_parametrizado')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_Activities_chembl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipe_assays_from_ids')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "Blob_chembl_assay_ids",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"paginationRules": {
+												"supportRFC5988": "true"
+											}
+										},
+										"sink": {
+											"type": "JsonSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "JsonWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "REST_Assay_Chembl_parametrizado",
+											"type": "DatasetReference",
+											"parameters": {
+												"assay_chembl_id": "@item().assay_chembl_id"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Blob_Carpeta_assays",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Blob_chembl_assay_ids')]",
+				"[concat(variables('factoryId'), '/datasets/REST_Assay_Chembl_parametrizado')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_Carpeta_assays')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/De_Activities_a_assay_chembl_id')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -410,21 +882,68 @@
 						"     skipDuplicateMapInputs: false,",
 						"     skipDuplicateMapOutputs: false) ~> flatten1",
 						"flatten1 select(mapColumn(",
-						"          activity_id,",
 						"          assay_chembl_id",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     partitionFileNames:['salida_chembl_assays_ids'],",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Blob_Activities_chembl')]",
 				"[concat(variables('factoryId'), '/datasets/Blob_chembl_assay_ids')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipe_Aplanamiento_activities_chembl_ids')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow_activities_a_assay_chembl_id",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "De_Activities_a_assay_chembl_id",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"listarFicheroJson": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/De_Activities_a_assay_chembl_id')]"
 			]
 		}
 	]
