@@ -232,7 +232,8 @@
 								"referenceName": "Blob_chembl_assay_ids",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": false
 						}
 					},
 					{
@@ -721,10 +722,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@{item().assay_chembl_id}_data.json",
-							"type": "Expression"
-						},
+						"fileName": "@{item().assay_chembl_id}_data.json",
 						"folderPath": "Assays",
 						"container": "chembl"
 					}
@@ -749,7 +747,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "assay_chembl_ids.json",
+						"fileName": "salida_chembl_assays_ids",
 						"container": "chembl"
 					}
 				},
